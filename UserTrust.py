@@ -62,10 +62,10 @@ import joblib
     #info = json.load(source)
 
 # Authenticate using the service account
-credentials = ServiceAccountCredentials.from_json_keyfile_name(
-    SERVICE_ACCOUNT_FILE,
-    scopes=['https://www.googleapis.com/auth/drive']
-)
+#credentials = ServiceAccountCredentials.from_json_keyfile_name(
+#    SERVICE_ACCOUNT_FILE,
+#    scopes=['https://www.googleapis.com/auth/drive']
+#)
 
 gauth = GoogleAuth()
 gauth.credentials = credentials
