@@ -56,10 +56,10 @@ import pandas as pd
 import joblib
 
 # Path to your service account key file
-SERVICE_ACCOUNT_FILE = 'C:/Users/TATEND2024/Downloads/project/avian-buffer-425114-f2-d272ecfab250.json'
+#SERVICE_ACCOUNT_FILE = 'C:/Users/TATEND2024/Downloads/project/avian-buffer-425114-f2-d272ecfab250.json'
 # Load the credentials from the file
-with open(SERVICE_ACCOUNT_FILE) as source:
-    info = json.load(source)
+#with open(SERVICE_ACCOUNT_FILE) as source:
+    #info = json.load(source)
 
 # Authenticate using the service account
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
