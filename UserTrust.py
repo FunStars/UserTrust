@@ -35,12 +35,13 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 st.title("UserTrust Prediction App")
 st.markdown("---")  # horizontal line for spacing
 
+
 # Load the dataset
-dataset_path = r'C:\Users\TATEND2024\Downloads\project\Consolidated_data.csv'
+dataset_path = 'https://drive.google.com/uc?export=download&id=1J3Lrp74uIjb0YVpYaiJh70t9xcYDuGX'
 dataset = pd.read_csv(dataset_path)
 
 # Load the trained model
-model_path = r'C:\Users\TATEND2024\Downloads\project\UserTPmodel.pkl'
+model_path = 'https://drive.google.com/uc?export=download&id=1_319OL-IjaPIPj88td840i0Sucm8diux'
 random_forest_model = joblib.load(model_path)
 
 features = ['TRUSTEE', 'OBJECT_ID', 'CONTENT_ID', 'SUBJECT_ID', 'RATING', 'POSITIVE_RATINGS_RECEIVED', 'NEGATIVE_RATINGS_RECEIVED']
