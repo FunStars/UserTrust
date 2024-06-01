@@ -35,7 +35,7 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 st.title("UserTrust Prediction App")
 st.markdown("---")  # horizontal line for spacing
 
- Load the dataset
+#Load the dataset
 dataset_path = r'https://github.com/FunStars/UserTrust/blob/main/Consolidated_data.zip'
 
 dataset = pd.read_csv(dataset_path)
