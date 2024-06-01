@@ -38,21 +38,19 @@ st.markdown("---")  # horizontal line for spacing
 
 import subprocess
 
-try:
-    import gdown
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "gdown"])
-    import gdown
-
-dataset_path = 'https://drive.google.com/uc?export=download&id=1J3Lrp74uIjb0YVpYaiJh70t9xcYDuGX'
-gdown.download(dataset_path, 'Consolidated_data.csv', quiet=False)
+import io
+from joblib import load
+import requests
 
 # Load the dataset
-dataset = pd.read_csv('Consolidated_data.csv')
+dataset_path = 'https://drive.google.com/uc?export=download&id=1J3Lrp74uIjb0YVpYaiJh70t9xcYDuGX'
+response = requests.get(dataset_path)
+dataset = pd.read_csv(io.BytesIO(response.content))
 
 # Load the trained model
-model_path = 'https://drive.google.com/uc?export=download&id=1_319OL-IjaPIPj88td840i0Sucm8diux'
-random_forest_model = joblib.load(model_path)
+model_path = 'https://drive.usercontent.google.com/download?id=1_319OL-IjaPIPj88td840i0Sucm8diux&export=download'
+response = requests.get(model_path)
+random_forest_model = load(io.BytesIO(response.content))
 
 features = ['TRUSTEE', 'OBJECT_ID', 'CONTENT_ID', 'SUBJECT_ID', 'RATING', 'POSITIVE_RATINGS_RECEIVED', 'NEGATIVE_RATINGS_RECEIVED']
 feature_suggestions = {}
