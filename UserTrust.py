@@ -35,62 +35,16 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 st.title("UserTrust Prediction App")
 st.markdown("---")  # horizontal line for spacing
 
-# Load the dataset
-#dataset_path = r'C:\Users\TATEND2024\Downloads\project\Consolidated_data.csv'
+ Load the dataset
+dataset_path = r'https://github.com/FunStars/UserTrust/blob/main/Consolidated_data.zip'
 
-#dataset = pd.read_csv(dataset_path)
+dataset = pd.read_csv(dataset_path)
 
 # Load the trained model
 #model_path = r'C:\Users\TATEND2024\Downloads\project\UserTPmodel.pkl'
 #random_forest_model = joblib.load(model_path)
 # Load the dataset
 # Load the dataset
-
-##############################################################################################################
-import json
-from pydrive2.auth import GoogleAuth
-from pydrive2.drive import GoogleDrive
-from oauth2client.service_account import ServiceAccountCredentials
-import streamlit as st
-import pandas as pd
-import joblib
-
-# Path to your service account key file
-#SERVICE_ACCOUNT_FILE = 'C:/Users/TATEND2024/Downloads/project/avian-buffer-425114-f2-d272ecfab250.json'
-# Load the credentials from the file
-#with open(SERVICE_ACCOUNT_FILE) as source:
-    #info = json.load(source)
-
-# Authenticate using the service account
-#credentials = ServiceAccountCredentials.from_json_keyfile_name(
-#    SERVICE_ACCOUNT_FILE,
-#    scopes=['https://www.googleapis.com/auth/drive']
-#)
-
-gauth = GoogleAuth()
-#gauth.credentials = credentials
-
-drive = GoogleDrive(gauth)
-
-
-
-# Load the dataset from Google Drive
-st.write("Loading dataset from Google Drive...")
-dataset_file_id = '1J3Lrp74uIjb0YVpYaiJh70t9xcYDuGX-'
-dataset_file = drive.CreateFile({'id': dataset_file_id})
-dataset_file.GetContentFile('Consolidated_data.csv')
-dataset = pd.read_csv('Consolidated_data.csv')
-
-st.write("Dataset loaded successfully.")
-st.dataframe(dataset.head())
-
-# Load the trained model from Google Drive
-st.write("Loading model from Google Drive...")
-model_file_id = '1_319OL-IjaPIPj88td840i0Sucm8diux'
-model_file = drive.CreateFile({'id': model_file_id})
-model_file.GetContentFile('UserTPmodel.pkl')
-random_forest_model = joblib.load('UserTPmodel.pkl')
-
 
 
 
@@ -215,7 +169,7 @@ if enable_real_time_learning:
             model = retrain_model(dataset)
 
             # Save the updated model
-            save_model(model, 'UserTPmodel.pkl')
+            save_model(model, 'model_path')
             st.sidebar.write("New data incorporated and model retrained.")
         else:
             st.sidebar.write("No new data file selected.")
@@ -238,7 +192,7 @@ if enable_real_time_learning:
             # Retrain the model with the recent dataset
             model = retrain_model(dataset)
             # Save the updated model
-            save_model(model, 'UserTPmodel.pkl')
+            save_model(model, 'model_path')
             st.sidebar.write("New data rolled back and model retrained.")
         elif rollback_option == "Original":
             # Restore the original dataset
@@ -246,7 +200,7 @@ if enable_real_time_learning:
             # Retrain the model with the original dataset
             model = retrain_model(dataset)
             # Save the updated model
-            save_model(model, 'UserTPmodel.pkl')
+            save_model(model, 'model_path')
             st.sidebar.write("Rolled back to original data and model retrained.")
     #else:
         st.sidebar.write("No new data to rollback.")
