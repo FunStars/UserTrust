@@ -35,22 +35,13 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 st.title("UserTrust Prediction App")
 st.markdown("---")  # horizontal line for spacing
 
-#Load the dataset
-dataset_path = r'https://github.com/FunStars/UserTrust/blob/main/Consolidated_data.zip'
-
+# Load the dataset
+dataset_path = 'Consolidated_data.csv'
 dataset = pd.read_csv(dataset_path)
 
 # Load the trained model
-#model_path = r'C:\Users\TATEND2024\Downloads\project\UserTPmodel.pkl'
-#random_forest_model = joblib.load(model_path)
-# Load the dataset
-# Load the dataset
-
-
-
-###############################################################################################################
-
-
+model_path = 'UserTPmodel.pkl'
+random_forest_model = joblib.load(model_path)
 
 features = ['TRUSTEE', 'OBJECT_ID', 'CONTENT_ID', 'SUBJECT_ID', 'RATING', 'POSITIVE_RATINGS_RECEIVED', 'NEGATIVE_RATINGS_RECEIVED']
 feature_suggestions = {}
@@ -169,7 +160,7 @@ if enable_real_time_learning:
             model = retrain_model(dataset)
 
             # Save the updated model
-            save_model(model, 'model_path')
+            save_model(model, model_path)
             st.sidebar.write("New data incorporated and model retrained.")
         else:
             st.sidebar.write("No new data file selected.")
@@ -192,7 +183,7 @@ if enable_real_time_learning:
             # Retrain the model with the recent dataset
             model = retrain_model(dataset)
             # Save the updated model
-            save_model(model, 'model_path')
+            save_model(model, model_path)
             st.sidebar.write("New data rolled back and model retrained.")
         elif rollback_option == "Original":
             # Restore the original dataset
@@ -200,7 +191,7 @@ if enable_real_time_learning:
             # Retrain the model with the original dataset
             model = retrain_model(dataset)
             # Save the updated model
-            save_model(model, 'model_path')
+            save_model(model, model_path)
             st.sidebar.write("Rolled back to original data and model retrained.")
     #else:
         st.sidebar.write("No new data to rollback.")
