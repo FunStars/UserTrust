@@ -232,8 +232,6 @@ if submit_button:
     elif any(feature not in new_data or new_data[feature][0] is None for feature in features):
         st.write("Please provide input for all features.")
     else:
-        # Perform any necessary preprocessing on the new data
-        # ...
         # Make the prediction using the trained model
         prediction = random_forest_model.predict(pd.DataFrame(new_data))
         st.write("UserTrust Prediction:", prediction[0])
