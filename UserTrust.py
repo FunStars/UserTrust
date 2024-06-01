@@ -36,10 +36,12 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 st.title("UserTrust Prediction App")
 st.markdown("---")  # horizontal line for spacing
 
+import subprocess
+
 try:
     import gdown
 except ImportError:
-    !pip install gdown
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "gdown"])
     import gdown
 
 dataset_path = 'https://drive.google.com/uc?export=download&id=1J3Lrp74uIjb0YVpYaiJh70t9xcYDuGX'
