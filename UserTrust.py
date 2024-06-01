@@ -6,8 +6,13 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import pickle
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
 
 
+gauth = GoogleAuth()
+gauth.LocalWebserverAuth()  # Authenticates using your web browser
+drive = GoogleDrive(gauth)
 
 # Set default background image for the sidebar
 sidebar_bg_image = "https://img.freepik.com/free-photo/azure-pigment-diffusing-water_23-2147798220.jpg?t=st=1716592208~exp=1716595808~hmac=09e94f3edfbd8e3d3e38238abd10731ac27ca9548f6a9498d67fa4befa68f837&w=740"
@@ -36,21 +41,29 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 st.title("UserTrust Prediction App")
 st.markdown("---")  # horizontal line for spacing
 
-import subprocess
-
-import io
-from joblib import load
-import requests
-
 # Load the dataset
-dataset_path = 'https://drive.google.com/uc?export=download&id=1J3Lrp74uIjb0YVpYaiJh70t9xcYDuGX'
-response = requests.get(dataset_path)
-dataset = pd.read_csv(io.BytesIO(response.content))
+#dataset_path = r'C:\Users\TATEND2024\Downloads\project\Consolidated_data.csv'
+
+#dataset = pd.read_csv(dataset_path)
 
 # Load the trained model
-model_path = 'https://drive.usercontent.google.com/download?id=1_319OL-IjaPIPj88td840i0Sucm8diux&export=download'
-response = requests.get(model_path)
-random_forest_model = load(io.BytesIO(response.content))
+#model_path = r'C:\Users\TATEND2024\Downloads\project\UserTPmodel.pkl'
+#random_forest_model = joblib.load(model_path)
+# Load the dataset
+# Load the dataset
+dataset_file_id = '1J3Lrp74uIjb0YVpYaiJh70t9xcYDuGX-'
+dataset_file = drive.CreateFile({'id': dataset_file_id})
+dataset_file.GetContentFile('Consolidated_data.csv')
+dataset = pd.read_csv('Consolidated_data.csv')
+
+# Load the trained model
+model_file_id = '1_319OL-IjaPIPj88td840i0Sucm8diux'
+model_file = drive.CreateFile({'id': model_file_id})
+model_file.GetContentFile('UserTPmodel.pkl')
+random_forest_model = joblib.load('UserTPmodel.pkl')
+
+
+
 
 features = ['TRUSTEE', 'OBJECT_ID', 'CONTENT_ID', 'SUBJECT_ID', 'RATING', 'POSITIVE_RATINGS_RECEIVED', 'NEGATIVE_RATINGS_RECEIVED']
 feature_suggestions = {}
@@ -169,7 +182,7 @@ if enable_real_time_learning:
             model = retrain_model(dataset)
 
             # Save the updated model
-            save_model(model, model_path)
+            save_model(model, 'UserTPmodel.pkl')
             st.sidebar.write("New data incorporated and model retrained.")
         else:
             st.sidebar.write("No new data file selected.")
@@ -192,7 +205,7 @@ if enable_real_time_learning:
             # Retrain the model with the recent dataset
             model = retrain_model(dataset)
             # Save the updated model
-            save_model(model, model_path)
+            save_model(model, 'UserTPmodel.pkl')
             st.sidebar.write("New data rolled back and model retrained.")
         elif rollback_option == "Original":
             # Restore the original dataset
@@ -200,7 +213,7 @@ if enable_real_time_learning:
             # Retrain the model with the original dataset
             model = retrain_model(dataset)
             # Save the updated model
-            save_model(model, model_path)
+            save_model(model, 'UserTPmodel.pkl')
             st.sidebar.write("Rolled back to original data and model retrained.")
     #else:
         st.sidebar.write("No new data to rollback.")
