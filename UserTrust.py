@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import pickle
-import gdown
+
 
 
 # Set default background image for the sidebar
@@ -36,6 +36,11 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 st.title("UserTrust Prediction App")
 st.markdown("---")  # horizontal line for spacing
 
+try:
+    import gdown
+except ImportError:
+    !pip install gdown
+    import gdown
 
 dataset_path = 'https://drive.google.com/uc?export=download&id=1J3Lrp74uIjb0YVpYaiJh70t9xcYDuGX'
 gdown.download(dataset_path, 'Consolidated_data.csv', quiet=False)
