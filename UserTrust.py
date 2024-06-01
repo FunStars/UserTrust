@@ -70,26 +70,29 @@ enable_real_time_learning = st.sidebar.checkbox("Enable Real-Time Learning")
 # Appearance settings
 enable_appearance_settings = st.sidebar.checkbox("Appearance Settings")
 
+#################################################################################################################
 # Add a button to compare trustees
-#compare_button = st.sidebar.button("Compare Trustees")
+compare_button = st.sidebar.button("Compare Trustees")
 
-#if compare_button:
-#    num_trustees = st.sidebar.number_input("Select the number of trustees to compare", min_value=2, step=1)
- #   trustee_ids = st.sidebar.multiselect(
- #       "Select the trustees to compare",
- #       dataset["TRUSTEE"].unique(),
- #       max_selections=int(num_trustees)
-#    )
+if compare_button:
+    num_trustees = st.sidebar.number_input("Select the number of trustees to compare", min_value=2, step=1)
+    trustee_ids = st.sidebar.multiselect(
+        "Select the trustees to compare",
+        dataset["TRUSTEE"].unique(),
+        max_selections=int(num_trustees)
+    )
 
- #   submit_button = st.sidebar.button("Apply")
+    submit_button = st.sidebar.button("Apply")
 
-#    if submit_button:
- #       if len(trustee_ids) >= 2:
- #           most_trusted_trustee = dataset.loc[dataset["TRUSTEE"].isin(trustee_ids)].groupby("TRUSTEE")["POSITIVE_RATINGS_RECEIVED"].sum().idxmax()
- #           st.write(f"The most trusted trustee ID is: {most_trusted_trustee}")
- #       else:
- #           st.write("Please select at least two trustees to compare.")
+    if submit_button:
+        if len(trustee_ids) >= 2:
+            most_trusted_trustee = dataset.loc[dataset["TRUSTEE"].isin(trustee_ids)].groupby("TRUSTEE")["POSITIVE_RATINGS_RECEIVED"].sum().idxmax()
+            st.write(f"The most trusted trustee ID is: {most_trusted_trustee}")
+        else:
+            st.write("Please select at least two trustees to compare.")
 
+ 
+#################################################################################################################
 
 if enable_appearance_settings:
     # Background image options
