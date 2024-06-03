@@ -213,7 +213,7 @@ for i, feature in enumerate(features_reordered):
         value = None
     elif isinstance(value, str):
         print(f"Error: Strings are not supported for '{feature}'. Please enter a number.")
-        continue
+       # continue
         
         if value.isdigit():
             value = int(value)
